@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Art Emporium: Warm cream + deep forest green + terracotta */
+    --background: 0.97 0.012 80;
+    --foreground: 0.18 0.02 60;
+
+    --card: 0.98 0.008 75;
+    --card-foreground: 0.18 0.02 60;
+
+    --popover: 0.98 0.008 75;
+    --popover-foreground: 0.18 0.02 60;
+
+    /* Deep forest green primary */
+    --primary: 0.32 0.07 155;
+    --primary-foreground: 0.97 0.008 80;
+
+    /* Warm parchment secondary */
+    --secondary: 0.92 0.025 75;
+    --secondary-foreground: 0.25 0.03 60;
+
+    --muted: 0.93 0.015 75;
+    --muted-foreground: 0.5 0.025 70;
+
+    /* Terracotta accent */
+    --accent: 0.58 0.12 45;
+    --accent-foreground: 0.97 0.008 80;
+
+    --destructive: 0.5 0.18 25;
+    --destructive-foreground: 0.97 0.008 80;
+
+    --border: 0.88 0.018 75;
+    --input: 0.88 0.018 75;
+    --ring: 0.32 0.07 155;
+
+    --radius: 0.25rem;
+
+    --chart-1: 0.58 0.12 45;
+    --chart-2: 0.32 0.07 155;
+    --chart-3: 0.7 0.08 80;
+    --chart-4: 0.45 0.09 250;
+    --chart-5: 0.65 0.1 25;
+
+    --sidebar: 0.95 0.015 75;
+    --sidebar-foreground: 0.18 0.02 60;
+    --sidebar-primary: 0.32 0.07 155;
+    --sidebar-primary-foreground: 0.97 0.008 80;
+    --sidebar-accent: 0.92 0.02 75;
+    --sidebar-accent-foreground: 0.18 0.02 60;
+    --sidebar-border: 0.88 0.018 75;
+    --sidebar-ring: 0.32 0.07 155;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "DM Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Playfair Display", serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "Playfair Display", serif;
+  }
+  .font-body {
+    font-family: "DM Sans", sans-serif;
+  }
+}
+
+/* Paper texture overlay */
+.paper-texture {
+  position: relative;
+}
+.paper-texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Decorative divider */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: oklch(var(--accent));
+}
+.ornament-divider::before,
+.ornament-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    oklch(var(--border)),
+    transparent
+  );
+}
