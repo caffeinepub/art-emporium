@@ -1,24 +1,24 @@
-# Art Emporium Stationery
+# Art Emporium
 
 ## Current State
-New project. No existing code.
+A stationery e-commerce store with product listing, category filtering, product detail modal, and a shopping cart sheet. No admin panel exists. The backend has `addProduct` and `updateProductStock` functions available.
 
 ## Requested Changes (Diff)
 
 ### Add
-- Landing page with hero section showcasing the Art Emporium brand
-- Product catalog displaying stationery items (notebooks, journals, pens, cards, gift sets, etc.)
-- Product detail view with description, price, and add-to-cart
-- Shopping cart with item management
-- About / brand story section
-- Contact / footer section
+- Admin panel accessible via a hidden "Admin" link in the navbar (or a floating button)
+- A form to add new products (name, description, price, category, stock quantity, image URL)
+- A list of existing products in the admin panel with ability to update stock
 
 ### Modify
-N/A
+- Navbar: add an "Admin" button that opens the admin panel as a Sheet/Dialog
 
 ### Remove
-N/A
+- Nothing removed
 
 ## Implementation Plan
-1. Backend: product catalog (name, description, price, category, stock), cart management
-2. Frontend: landing hero, product grid, product detail modal, cart sidebar, about section, footer
+1. Add `useAddProduct` and `useUpdateProductStock` mutation hooks in `useQueries.ts`
+2. Build an `AdminPanel` component as a Sheet with:
+   - Add Product form (name, description, priceCents, category select, imageUrl, stockQuantity)
+   - Product list with stock update inputs
+3. Add "Admin" button to the navbar that opens the panel

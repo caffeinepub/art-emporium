@@ -20,6 +20,7 @@ import {
   Leaf,
   Minus,
   Plus,
+  Settings2,
   ShoppingBag,
   Star,
   X,
@@ -29,6 +30,7 @@ import { useCallback, useState } from "react";
 import { toast } from "sonner";
 import type { Product } from "./backend.d";
 import { Category } from "./backend.d";
+import { AdminPanel } from "./components/AdminPanel";
 import {
   useAddItemToCart,
   useClearCart,
@@ -433,6 +435,7 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState<"all" | Category>("all");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [cartOpen, setCartOpen] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
 
   const { data: products = [], isLoading } = useListProducts();
   const { data: cart } = useGetCart();
@@ -476,7 +479,7 @@ export default function App() {
               Art Emporium
             </span>
           </a>
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             <button
               type="button"
               data-ocid="nav.shop_link"
@@ -500,28 +503,50 @@ export default function App() {
             >
               Contact
             </button>
+            <Button
+              variant="outline"
+              size="sm"
+              data-ocid="admin.open_modal_button"
+              onClick={() => setAdminOpen(true)}
+              className="font-body text-xs tracking-wide gap-1.5 h-8 px-3 text-muted-foreground border-border hover:text-foreground"
+            >
+              <Settings2 className="h-3.5 w-3.5" />
+              Admin
+            </Button>
           </nav>
-          <button
-            type="button"
-            data-ocid="nav.cart_button"
-            onClick={() => setCartOpen(true)}
-            className="relative flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors"
-            aria-label="Open cart"
-          >
-            <ShoppingBag className="h-5 w-5" />
-            <AnimatePresence>
-              {cartCount > 0 && (
-                <motion.span
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                  className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center font-body"
-                >
-                  {cartCount}
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </button>
+          <div className="flex items-center gap-3">
+            {/* Mobile admin button */}
+            <button
+              type="button"
+              data-ocid="admin.open_modal_button"
+              onClick={() => setAdminOpen(true)}
+              className="md:hidden text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Open admin panel"
+            >
+              <Settings2 className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              data-ocid="nav.cart_button"
+              onClick={() => setCartOpen(true)}
+              className="relative flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground transition-colors"
+              aria-label="Open cart"
+            >
+              <ShoppingBag className="h-5 w-5" />
+              <AnimatePresence>
+                {cartCount > 0 && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center font-body"
+                  >
+                    {cartCount}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -803,6 +828,9 @@ export default function App() {
         onClose={() => setCartOpen(false)}
         products={products}
       />
+
+      {/* ── Admin Panel ── */}
+      <AdminPanel open={adminOpen} onClose={() => setAdminOpen(false)} />
     </div>
   );
 }

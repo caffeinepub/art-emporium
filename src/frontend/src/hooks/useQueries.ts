@@ -68,4 +68,48 @@ export function useClearCart() {
   });
 }
 
+export function useAddProduct() {
+  const { actor } = useActor();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (args: {
+      name: string;
+      description: string;
+      priceCents: bigint;
+      category: Category;
+      imageUrl: string;
+      stockQuantity: bigint;
+    }) => {
+      if (!actor) throw new Error("No actor");
+      return actor.addProduct(
+        args.name,
+        args.description,
+        args.priceCents,
+        args.category,
+        args.imageUrl,
+        args.stockQuantity,
+      );
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["products"] }),
+  });
+}
+
+export function useUpdateProductStock() {
+  const { actor } = useActor();
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      productId,
+      newStock,
+    }: {
+      productId: bigint;
+      newStock: bigint;
+    }) => {
+      if (!actor) throw new Error("No actor");
+      return actor.updateProductStock(productId, newStock);
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["products"] }),
+  });
+}
+
 export { Category };
